@@ -1,0 +1,50 @@
+package pkgDB;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/DB")
+public class DB extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    public DB() {
+        // TODO Auto-generated constructor stub
+    }
+
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=EUC-KR");
+		PrintWriter out = response.getWriter();
+		
+		String uri = request.getRequestURI(); // URI
+		String path = request.getContextPath();
+		String command = uri.substring(path.length()); // 요청경로
+		
+		//forward 메소드 사용을 위해 다음과 같이 함
+		String strURI="";
+		RequestDispatcher dispatcher; 
+		if(command.equals("/board.do")) {
+			strURI="list.jsp";
+			request.setAttribute("page", (int)request.getParameter("page"));
+			dispatcher = request.getRequestDispatcher(strURI);
+			dispatcher.forward(request, response);
+		}
+		out.println(command);
+		
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

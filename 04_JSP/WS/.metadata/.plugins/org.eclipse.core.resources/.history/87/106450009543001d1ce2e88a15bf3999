@@ -1,0 +1,25 @@
+package pkgMVC;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+public class MemLogin {
+	//사용자 계정을 통해 확인 되면 session 객체 활용
+	public boolean chkLogin(HttpServletRequest request) {
+		String userId = "csjin21c";
+		String userPw = "1111";
+		String name = request.getParameter("name");
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
+		String email = request.getParameter("email");
+		if(userId.equals(id) && userPw.equals(pw)) {
+			HttpSession session = request.getSession();//session 객체 생성
+			session.setAttribute("sessName", name);
+			session.setAttribute("sessId", id);
+			session.setAttribute("sessPw", pw);
+			session.setAttribute("sessEmail", email);
+			return true;
+		}
+		else return false;
+	}
+}

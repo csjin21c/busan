@@ -1,0 +1,102 @@
+/*
+ * BbsDAO 클래스 메서드
+ * public void bbsConnect() : 데이터베이스 연결 메서드
+ * public Map<String, String> getIdx() : idx값과 list값을 Map으로 반환
+ */
+package pkgJDBC;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@MultipartConfig(
+        maxFileSize = 1024 * 1024 * 5,//5m
+        maxRequestSize = 1024 * 1024 * 50	//50m
+)
+@WebServlet("/bbsProcess")
+public class BoardController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    public BoardController() {
+        super();
+    }
+
+	public void init(ServletConfig config) throws ServletException {
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doProcess(request, response);
+	}
+	
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=EUC-KR");
+		PrintWriter out = response.getWriter();
+		
+		String uri = request.getRequestURI(); // URI
+		String path = request.getContextPath();
+		String command = uri.substring(path.length()); // 요청경로
+		
+		//forward 메소드 사용을 위해 다음과 같이 함
+		String strURI="";
+		RequestDispatcher dispatcher;// = request.getRequestDispatcher("FourRulesResult.jsp"); 
+		if(command.equals("/board.do")) {
+			Map<String, Integer> mapData = new HashMap<>();//BbsDAO.getInt() 메서드로 반환받기위해 생성
+			BbsDAO bbs = new BbsDAO();
+			mapData = bbs.getIdx();
+			if(bbs.getIdx() != null) {
+				out.println("data 받음");
+				out.println(mapData.get("idx"));
+				out.println(mapData.get("list"));
+			}
+			else System.out.println("오류");
+			strURI="list.jsp";
+		}
+		else if(command.equals("/writeForm.do")) {
+			strURI="/list.jsp";//forward에 사용될 이동 문자열 생성
+		}
+		else if(command.equals("/register.do")) {
+			strURI="";
+		}
+		else if(command.equals("/view.do")) {
+			strURI="";
+		}
+		else if(command.equals("/answerForm.do")) {
+			strURI="";
+		}
+		else if(command.equals("/updateForm.do")) {
+			strURI="";
+		}
+		else if(command.equals("/modify.do")) {
+			strURI="";
+		}
+		else if(command.equals("/passwordForm.do")) {//passwordForm ==> [ updateForm.do | delete.do ]
+			strURI="";
+		}
+		else if(command.equals("/delete.do")) {
+			strURI="";
+		}
+		else {
+			strURI="";//forward에 사용될 이동 문자열 생성
+		}
+		//dispatcher = request.getRequestDispatcher(strURI);
+		//dispatcher.forward(request, response);
+	}//e:void doProcess();
+	
+
+}

@@ -1,0 +1,20 @@
+package pkgJDBC;
+
+public class BoardField {
+	private int idx;
+	private String part;
+	
+	public int getIdx() {
+		return idx;
+	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
+	public int getPart() {
+		return part;
+	}
+	public void setPart(String part) {
+		this.part = part;
+	}	
+}
+

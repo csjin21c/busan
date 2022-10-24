@@ -1,7 +1,0 @@
-INDEX VERSION 1.131
-E:\03_STUDY\02_example\07_JSP\WS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\974550114.index
-\prjJDBC\src\main\java
-E:\03_STUDY\02_example\07_JSP\WS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1076000083.index
-\prjDB\src\main\java
-E:\03_STUDY\02_example\07_JSP\WS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2762913644.index
-\prjEx\src\main\java
